@@ -5,7 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", indexes = {@Index(name = "usuario_pk", columnList = "usuario_id", unique = true),
+                                     @Index(name = "usuario_uk", columnList = "email", unique = true)})
 public class Usuario {
 
     @Id
@@ -18,6 +19,10 @@ public class Usuario {
     @Email
     @Column(name = "email", length = 200, nullable = false)
     private String email;
+
+    @NotBlank
+    @Column(name = "nombres", length = 100, nullable = false)
+    private String nombres;
 
     @Column(name = "activo", nullable = false)
     private Boolean activo = false;
@@ -44,5 +49,13 @@ public class Usuario {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 }
